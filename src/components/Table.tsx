@@ -5,14 +5,10 @@ import { IUserItem } from "../types/types";
 
 export interface TableProps {
   users: IUserItem[];
+  onDelete: (userId: string) => void;
 }
 
-const Table: FC<TableProps> = ({ users }) => {
-  const [usersRow, setUsersRow] = useState<IUserItem[]>(users);
-  const deleteHandler = (deletedId: string) => {
-    const newState = usersRow.filter((e) => e._id !== deletedId);
-    setUsersRow(newState);
-  };
+const Table: FC<TableProps> = ({ users, onDelete }) => {
   return (
     <table className="table">
       <thead>
@@ -27,11 +23,7 @@ const Table: FC<TableProps> = ({ users }) => {
       </thead>
       <tbody>
         {users.map((user) => (
-          <User
-            onClick={() => deleteHandler(user._id)}
-            key={user._id}
-            user={user}
-          />
+          <User onDelete={onDelete} key={user._id} user={user} />
         ))}
       </tbody>
     </table>

@@ -16,5 +16,4 @@ export interface IUserItem {
   qualities: IQuality[];
   completedMeetings: number;
   rate: number;
-  onDelete?: (userId: string) => void;
 }

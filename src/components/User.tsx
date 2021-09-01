@@ -4,9 +4,11 @@ import Qualitys from "./Qualityes";
 
 export interface UserProps {
   user: IUserItem;
+
+  onDelete: (userId: string) => void;
 }
 
-const User: FC<UserProps> = ({ user }) => {
+const User: FC<UserProps> = ({ user, onDelete }) => {
   const { name } = user;
   return (
     <tr key={user._id} id={user._id}>
@@ -19,7 +21,7 @@ const User: FC<UserProps> = ({ user }) => {
       <td>{user.rate}</td>
       <td>
         <button
-          onClick={() => user.onDelete(user._id)}
+          onClick={() => onDelete(user._id)}
           className="btn btn-danger btn-sm"
         >
           Delete

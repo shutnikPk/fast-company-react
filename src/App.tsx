@@ -8,9 +8,15 @@ const usersResponse = api.users.fetchAll();
 
 function App() {
   const [users, setUsers] = useState<IUserItem[]>(usersResponse);
+
+  const deleteHandler = (deletedId: string) => {
+    const newState = users.filter((e) => e._id !== deletedId);
+    setUsers(newState);
+  };
+
   return (
     <div>
-      <Table users={users} />
+      <Table onDelete={deleteHandler} users={users} />
     </div>
   );
 }
