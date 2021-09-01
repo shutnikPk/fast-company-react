@@ -1,9 +1,19 @@
 import React, { FC } from "react";
+import { IQuality } from "../types/types";
 
-export interface QualityProps {}
+export interface QualitysProps {
+  qualityes: IQuality[];
+}
 
-const Quality: FC<QualityProps> = () => {
-  return <div></div>;
+const Qualitys: FC<QualitysProps> = ({ qualityes }) => {
+  return (
+    <>
+      {qualityes.map((e) => (
+        <span key={e._id} className={"badge m-2 bg-" + e.color}>
+          {e.name}
+        </span>
+      ))}
+    </>
+  );
 };
-
-export default Quality;
+export default Qualitys;

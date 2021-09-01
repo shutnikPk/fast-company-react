@@ -1,11 +1,16 @@
 import React from "react";
-import "./App.css";
+import { useState } from "react";
 import Table from "./components/Table";
+import api from "./API/index";
+import { IUserItem } from "./types/types";
+
+const usersResponse = api.users.fetchAll();
 
 function App() {
+  const [users, setUsers] = useState<IUserItem[]>(usersResponse);
   return (
     <div>
-      <Table />
+      <Table users={users} />
     </div>
   );
 }
