@@ -8,7 +8,11 @@ export interface TableProps {
 }
 
 const Table: FC<TableProps> = ({ users }) => {
-  const deleteHandler = ()=>{}
+  const [usersRow, setUsersRow] = useState<IUserItem[]>(users);
+  const deleteHandler = (deletedId: string) => {
+    const newState = usersRow.filter((e) => e._id !== deletedId);
+    setUsersRow(newState);
+  };
   return (
     <table className="table">
       <thead>

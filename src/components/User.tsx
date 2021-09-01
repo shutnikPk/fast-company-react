@@ -9,7 +9,7 @@ export interface UserProps {
 const User: FC<UserProps> = ({ user }) => {
   const { name } = user;
   return (
-    <tr>
+    <tr key={user._id} id={user._id}>
       <td>{name}</td>
       <td>
         <Qualitys qualityes={user.qualities} />;
@@ -18,7 +18,10 @@ const User: FC<UserProps> = ({ user }) => {
       <td>{user.completedMeetings}</td>
       <td>{user.rate}</td>
       <td>
-        <button onClick={onDelete(user._id)} className="btn btn-danger btn-sm">
+        <button
+          onClick={() => user.onDelete(user._id)}
+          className="btn btn-danger btn-sm"
+        >
           Delete
         </button>
       </td>
