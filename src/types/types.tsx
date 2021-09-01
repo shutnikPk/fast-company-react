@@ -16,4 +16,5 @@ export interface IUserItem {
   qualities: IQuality[];
   completedMeetings: number;
   rate: number;
+  favorite?: boolean;
 }
