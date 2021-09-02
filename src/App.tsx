@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import Table from "./components/Table";
+import NavBar from "./components/NavBar";
 import api from "./API/index";
 import { IUserItem } from "./types/types";
 import "bootstrap/dist/css/bootstrap.css";
@@ -28,8 +29,17 @@ function App() {
     setUsers(newState);
   };
 
+  const letter = (amount: number): string => {
+    console.log(amount % 10);
+    if (amount % 10 > 1 && amount % 10 < 5 && (amount < 10 || amount > 20)) {
+      return "а";
+    }
+    return "";
+  };
+
   return (
     <div>
+      <NavBar msg={letter(users.length)} amountUsers={users.length} />
       <Table
         onDelete={deleteHandler}
         users={users}
