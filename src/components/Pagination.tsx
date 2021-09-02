@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, {FC} from 'react';
 
 export interface PaginationProps {
   amountItems: number;
@@ -28,7 +28,7 @@ const Pagination: FC<PaginationProps> = ({
           return (
             <li
               key={page}
-              className={"page-item" + (page === currentPage ? " active" : "")}
+              className={'page-item' + (page === currentPage ? ' active' : '')}
             >
               <a className="page-link" onClick={() => onPageChange(page)}>
                 {page}
