@@ -11,6 +11,8 @@ const usersResponse = api.users.fetchAll();
 function App() {
   const [users, setUsers] = useState<IUserItem[]>(usersResponse);
 
+  const amountOfUser: number = users.length;
+
   const deleteHandler = (deletedId: string) => {
     const newState = users.filter((e) => e._id !== deletedId);
     setUsers(newState);
@@ -30,7 +32,6 @@ function App() {
   };
 
   const letter = (amount: number): string => {
-    console.log(amount % 10);
     if (amount % 10 > 1 && amount % 10 < 5 && (amount < 10 || amount > 20)) {
       return "а";
     }
@@ -39,7 +40,7 @@ function App() {
 
   return (
     <div>
-      <NavBar msg={letter(users.length)} amountUsers={users.length} />
+      <NavBar msg={letter(amountOfUser)} amountUsers={amountOfUser} />
       <Table
         onDelete={deleteHandler}
         users={users}
