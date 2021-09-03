@@ -1,16 +1,16 @@
-import React, { FC } from "react";
+import React, { FC } from 'react'
 
 export interface NavBarProps {
-  amountUsers: number;
-  msg: string;
+    amountUsers: number
+    msg: string
 }
 
 const NavBar: FC<NavBarProps> = ({ amountUsers, msg }) => {
   return (
-    <div className="badge m-2 bg-primary">
-      {amountUsers} человек{msg} тусанет с тобой чегодня
-    </div>
-  );
-};
+        <div className="badge m-2 bg-primary">
+            {amountUsers} человек{msg} тусанет с тобой чегодня
+        </div>
+  )
+}
 
-export default NavBar;
+export default NavBar

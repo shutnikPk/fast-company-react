@@ -1,44 +1,50 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react'
 
 export interface PaginationProps {
-  amountItems: number;
-  pageSize: number;
-  currentPage: number;
-  onPageChange: (indexPage: number) => void;
+    amountItems: number
+    pageSize: number
+    currentPage: number
+    onPageChange: (indexPage: number) => void
 }
 
 const Pagination: FC<PaginationProps> = ({
   amountItems,
   pageSize,
   onPageChange,
-  currentPage,
+  currentPage
 }) => {
-  const pages: number[] = [];
+  const pages: number[] = []
 
   for (let i = 1; i < Math.ceil(amountItems / pageSize) + 1; i++) {
-    pages.push(i);
+    pages.push(i)
   }
 
-  if (pages.length === 1) return null;
+  if (pages.length === 1) return null
 
   return (
-    <nav aria-label="...">
-      <ul className="pagination">
-        {pages.map((page) => {
-          return (
-            <li
-              key={page}
-              className={'page-item' + (page === currentPage ? ' active' : '')}
-            >
-              <a className="page-link" onClick={() => onPageChange(page)}>
-                {page}
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
-  );
-};
+        <nav aria-label="...">
+            <ul className="pagination">
+                {pages.map((page) => {
+                  return (
+                        <li
+                            key={page}
+                            className={
+                                'page-item' +
+                                (page === currentPage ? ' active' : '')
+                            }
+                        >
+                            <a
+                                className="page-link"
+                                onClick={() => onPageChange(page)}
+                            >
+                                {page}
+                            </a>
+                        </li>
+                  )
+                })}
+            </ul>
+        </nav>
+  )
+}
 
-export default Pagination;
+export default Pagination
