@@ -30,7 +30,6 @@ function App() {
   };
 
   const letter = (amount: number): string => {
-    console.log(amount % 10);
     if (amount % 10 > 1 && amount % 10 < 5 && (amount < 10 || amount > 20)) {
       return "а";
     }
