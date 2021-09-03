@@ -1,6 +1,6 @@
-import React, { FC } from "react";
-import { IUserItem } from "../types/types";
-import Qualitys from "./Qualityes";
+import React, {FC} from 'react';
+import {IUserItem} from '../types/types';
+import Qualitys from './Qualityes';
 
 export interface UserProps {
   user: IUserItem;
@@ -8,7 +8,7 @@ export interface UserProps {
   onFavorite: (userId: string, isFavorite: boolean | undefined) => void;
 }
 
-const User: FC<UserProps> = ({ user, onDelete, onFavorite }) => {
+const User: FC<UserProps> = ({user, onDelete, onFavorite}) => {
   return (
     <tr key={user._id} id={user._id}>
       <td>{user.name}</td>
@@ -21,7 +21,7 @@ const User: FC<UserProps> = ({ user, onDelete, onFavorite }) => {
       <td>
         <i
           onClick={() => onFavorite(user._id, user.favorite)}
-          className={user.favorite ? "bi bi-bookmark-fill" : "bi bi-bookmark"}
+          className={user.favorite ? 'bi bi-bookmark-fill' : 'bi bi-bookmark'}
         />
       </td>
       <td>

@@ -11,6 +11,8 @@ const usersResponse = api.users.fetchAll();
 function App() {
   const [users, setUsers] = useState<IUserItem[]>(usersResponse);
 
+  const amountOfUser: number = users.length;
+
   const deleteHandler = (deletedId: string) => {
     const newState = users.filter((e) => e._id !== deletedId);
     setUsers(newState);
@@ -38,7 +40,7 @@ function App() {
 
   return (
     <div>
-      <NavBar msg={letter(users.length)} amountUsers={users.length} />
+      <NavBar msg={letter(amountOfUser)} amountUsers={amountOfUser} />
       <Table
         onDelete={deleteHandler}
         users={users}
