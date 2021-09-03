@@ -14,6 +14,8 @@ function App () {
 
   const amountOfUser: number = users.length
 
+  console.log(users)
+
   const deleteHandler = (deletedId: string) => {
     const newState = users.filter((e) => e._id !== deletedId)
     setUsers(newState)

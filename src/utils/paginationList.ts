@@ -5,7 +5,7 @@ export default function PaginationList (
   pageNumber: number,
   pageSize: number
 ): IUserItem[] {
-  const stratindex: number = 1 + (pageNumber * pageSize - pageSize)
+  const stratindex: number = (pageNumber * pageSize - pageSize)
   const tmpArr = users.slice(stratindex, stratindex + pageSize)
   return tmpArr
 }

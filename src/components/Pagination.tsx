@@ -19,7 +19,7 @@ const Pagination: FC<PaginationProps> = ({
     pages.push(i)
   }
 
-  if (pages.length === 1) return null
+  if (pages.length === 1 && currentPage === 1) return null
 
   return (
         <nav aria-label="...">
