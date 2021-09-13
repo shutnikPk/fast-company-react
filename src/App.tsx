@@ -1,15 +1,19 @@
+/* eslint-disable import/extensions */
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 
 import Table from './components/Table'
 import NavBar from './components/NavBar'
-// eslint-disable-next-line import/extensions
+
 import api from './API/index'
 import { IUserItem } from './types/types'
 import 'bootstrap/dist/css/bootstrap.css'
+import GroupList from './components/gropList'
 
 const usersResponse = api.users.fetchAll()
 
 function App () {
+  const [professions, setProffesion] = useState<any>(api.professions.fetchAll())
   const [users, setUsers] = useState<IUserItem[]>(usersResponse)
 
   const amountOfUser: number = users.length
@@ -45,9 +49,14 @@ function App () {
     return ''
   }
 
+  const handleProfessionSelect = ():void => {
+    console.log('sf')
+  }
+
   return (
         <div>
             <NavBar msg={letter(amountOfUser)} amountUsers={amountOfUser} />
+            <GroupList items={professions} onItemSelect={handleProfessionSelect}/>
             <Table
                 onDelete={deleteHandler}
                 users={users}
