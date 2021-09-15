@@ -1,5 +1,8 @@
-import React, { useState, FC } from 'react'
+import React, { useState, useEffect, FC } from 'react'
 import User from './User'
+
+import NavBar from './NavBar'
+
 import Pagination from './Pagination'
 import { IUserItem } from '../types/types'
 import PaginationList from '../utils/paginationList'
@@ -8,21 +11,40 @@ export interface TableProps {
     users: IUserItem[]
     onDelete: (userId: string) => void
     onFavorite: (userId: string, isFavorite: boolean | undefined) => void
+    selectedProf:{} | undefined
 }
 
-const Table: FC<TableProps> = ({ users, onDelete, onFavorite }) => {
+const Table: FC<TableProps> = ({ users, onDelete, onFavorite, selectedProf }) => {
   const [currentPage, setCurrentPage] = useState<number>(1)
 
-  const pageSize = 4
+  useEffect(() => setCurrentPage(1), [selectedProf])
 
-  const usersCrop: IUserItem[] = PaginationList(users, currentPage, pageSize)
+  const pageSize = 2
+
+  const filtredUsers:any = selectedProf ? users.filter(user => user.profession === selectedProf) : users
+
+  const amountOfUser: number = filtredUsers.length
+
+  const usersCrop: IUserItem[] = PaginationList(filtredUsers, currentPage, pageSize)
 
   const pageChangeHandler = (indexPage: number) => {
     setCurrentPage(indexPage)
   }
 
+  const letter = (amount: number): string => {
+    if (
+      amount % 10 > 1 &&
+            amount % 10 < 5 &&
+            (amount < 10 || amount > 20)
+    ) {
+      return 'а'
+    }
+    return ''
+  }
+
   return (
         <>
+        <NavBar msg={letter(amountOfUser)} amountUsers={amountOfUser} />
             <table className="table">
                 <thead>
                     <tr>
@@ -47,7 +69,7 @@ const Table: FC<TableProps> = ({ users, onDelete, onFavorite }) => {
                 </tbody>
             </table>
             <Pagination
-                amountItems={users.length}
+                amountItems={amountOfUser}
                 pageSize={pageSize}
                 onPageChange={pageChangeHandler}
                 currentPage={currentPage}

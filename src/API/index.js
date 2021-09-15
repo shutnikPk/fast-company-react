@@ -1,8 +1,7 @@
-/* eslint-disable import/extensions */
-import professions from './fake.api/professions.api'
-import * as users from './fake.api/user.api'
+import users from "./fake.api/user.api";
+import professions from "./fake.api/professions.api";
 const API = {
-  professions,
-  users
-}
-export default API
+    users,
+    professions
+};
+export default API;
