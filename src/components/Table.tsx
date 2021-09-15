@@ -8,7 +8,7 @@ import { IUserItem } from '../types/types'
 import PaginationList from '../utils/paginationList'
 
 export interface TableProps {
-    users: IUserItem[]
+    users: Promise<IUserItem[]>
     onDelete: (userId: string) => void
     onFavorite: (userId: string, isFavorite: boolean | undefined) => void
     selectedProf:{} | undefined

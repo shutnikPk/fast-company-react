@@ -14,7 +14,7 @@ const usersResponse = api.users.fetchAll()
 function App () {
   const [professions, setProffesion] = useState<any>()
   const [selectedProf, setSelectedProf] = useState<{}>()
-  const [users, setUsers] = useState<IUserItem[]>(usersResponse)
+  const [users, setUsers] = useState<Promise<IUserItem[]>>(usersResponse)
 
   useEffect(() => {
     api.professions.fetchAll().then((data) => setProffesion(data))
