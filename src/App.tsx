@@ -5,22 +5,27 @@ import React, { useState, useEffect } from 'react'
 import Table from './components/Table'
 
 import api from './API/index'
-import { IUserItem } from './types/types'
+import { IUserItem, IProfession } from './types/types'
 import 'bootstrap/dist/css/bootstrap.css'
 import GroupList from './components/gropList'
 
 const usersResponse = api.users.fetchAll()
 
 function App () {
-  const [professions, setProffesion] = useState<any>()
-  const [selectedProf, setSelectedProf] = useState<{}>()
-  const [users, setUsers] = useState<Promise<IUserItem[]>>(usersResponse)
+  const [professions, setProffesion] = useState<IProfession[]>()
+  const [selectedProf, setSelectedProf] = useState<IProfession>()
+  const [users, setUsers] = useState<IUserItem[]>([])
 
   useEffect(() => {
     api.professions.fetchAll().then((data) => setProffesion(data))
   }, [])
 
+  useEffect(() => {
+    api.users.fetchAll().then((data) => setUsers(data))
+  }, [])
+
   const deleteHandler = (deletedId: string) => {
+    if (!users) return
     const newState = users.filter((e) => e._id !== deletedId)
     setUsers(newState)
   }
@@ -29,6 +34,7 @@ function App () {
     userId: string,
     isFavorite: boolean | undefined
   ): void => {
+    if (!users) return
     const newState = users.map((e) => {
       if (e._id === userId) {
         e.favorite = !e.favorite
@@ -38,9 +44,8 @@ function App () {
     setUsers(newState)
   }
 
-  const handleProfessionSelect = (item:{}):void => {
+  const handleProfessionSelect = (item:IProfession):void => {
     setSelectedProf(item)
-    console.log(item)
   }
 
   const clearFilter = ():void => {

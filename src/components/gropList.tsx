@@ -1,15 +1,15 @@
 import React, { FC } from 'react'
+import { IProfession } from '../types/types'
 
 interface GroupListProps {
     items:any,
     valueProperty?:string,
     contentProperty?:string,
     selectedItem:{} | undefined,
-    onItemSelect:(obj:{})=>void
+    onItemSelect:(obj:IProfession)=>void
 }
 
 const GroupList: FC<GroupListProps> = ({ items, valueProperty = '_id', contentProperty = 'name', onItemSelect, selectedItem }) => {
-  console.log(selectedItem)
   return (
     <ul className="list-group">
       {Object.keys(items).map(

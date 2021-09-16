@@ -4,14 +4,14 @@ import User from './User'
 import NavBar from './NavBar'
 
 import Pagination from './Pagination'
-import { IUserItem } from '../types/types'
+import { IUserItem, IProfession } from '../types/types'
 import PaginationList from '../utils/paginationList'
 
 export interface TableProps {
-    users: Promise<IUserItem[]>
+    users: IUserItem[]
     onDelete: (userId: string) => void
     onFavorite: (userId: string, isFavorite: boolean | undefined) => void
-    selectedProf:{} | undefined
+    selectedProf:IProfession|undefined
 }
 
 const Table: FC<TableProps> = ({ users, onDelete, onFavorite, selectedProf }) => {
@@ -21,8 +21,7 @@ const Table: FC<TableProps> = ({ users, onDelete, onFavorite, selectedProf }) =>
 
   const pageSize = 2
 
-  const filtredUsers:any = selectedProf ? users.filter(user => user.profession === selectedProf) : users
-
+  const filtredUsers:IUserItem[] = selectedProf ? users.filter((user:IUserItem) => user.profession._id === selectedProf._id) : users
   const amountOfUser: number = filtredUsers.length
 
   const usersCrop: IUserItem[] = PaginationList(filtredUsers, currentPage, pageSize)
