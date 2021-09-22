@@ -4,8 +4,11 @@ import User from './User'
 import NavBar from './NavBar'
 
 import Pagination from './Pagination'
-import { IUserItem, IProfession } from '../types/types'
+import { IUserItem, IProfession, IColumn } from '../types/types'
 import PaginationList from '../utils/paginationList'
+
+import _ from 'lodash'
+import TableHeader from './TableHeader'
 
 export interface TableProps {
     users: IUserItem[]
@@ -16,15 +19,47 @@ export interface TableProps {
 
 const Table: FC<TableProps> = ({ users, onDelete, onFavorite, selectedProf }) => {
   const [currentPage, setCurrentPage] = useState<number>(1)
+  const [sortBy, setSortBy] = useState<{iter:string, order:boolean|'asc'|'desc'}>({ iter: 'name', order: 'asc' })
 
   useEffect(() => setCurrentPage(1), [selectedProf])
 
-  const pageSize = 2
+  const pageSize = 8
 
-  const filtredUsers:IUserItem[] = selectedProf ? users.filter((user:IUserItem) => user.profession._id === selectedProf._id) : users
+  const filtredUsers: IUserItem[] = selectedProf ? users.filter((user:IUserItem) => user.profession._id === selectedProf._id) : users
   const amountOfUser: number = filtredUsers.length
+  const sortedUser: IUserItem[] = _.orderBy(filtredUsers, [sortBy.iter], [sortBy.order])
+  const usersCrop: IUserItem[] = PaginationList(sortedUser, currentPage, pageSize)
 
-  const usersCrop: IUserItem[] = PaginationList(filtredUsers, currentPage, pageSize)
+  const columns: {[key: string]: IColumn} = {
+    name: {
+      iter: 'name',
+      title: 'Имя'
+    },
+    qualities: {
+      // iter: '',
+      title: 'Качества'
+    },
+    profession: {
+      iter: 'profession.name',
+      title: 'Профессия'
+    },
+    completedMeetings: {
+      iter: 'completedMeetings',
+      title: 'Встретился Раз'
+    },
+    rate: {
+      iter: 'rate',
+      title: 'Оценка'
+    },
+    bookmark: {
+      iter: 'bookmark',
+      title: 'Избранное'
+    },
+    delete: {
+      // iter: '',
+      title: 'Удалить'
+    }
+  }
 
   const pageChangeHandler = (indexPage: number) => {
     setCurrentPage(indexPage)
@@ -41,39 +76,38 @@ const Table: FC<TableProps> = ({ users, onDelete, onFavorite, selectedProf }) =>
     return ''
   }
 
+  const handleSort = (param?:string):void => {
+    if (!param) return
+    if (sortBy.iter === param) {
+      setSortBy((prevState) => ({ ...prevState, order: prevState.order === 'asc' ? 'desc' : 'asc' }))
+    } else {
+      setSortBy({ iter: param, order: 'asc' })
+    }
+  }
+
   return (
-        <>
-        <NavBar msg={letter(amountOfUser)} amountUsers={amountOfUser} />
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Имя</th>
-                        <th scope="col">Качества</th>
-                        <th scope="col">Профессия</th>
-                        <th scope="col">Встретился, раз</th>
-                        <th scope="col">Оценка</th>
-                        <th scope="col">В избранное</th>
-                        <th scope="col">Удалить</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {usersCrop.map((user) => (
-                        <User
-                            onDelete={onDelete}
-                            onFavorite={onFavorite}
-                            key={user._id}
-                            user={user}
-                        />
-                    ))}
-                </tbody>
-            </table>
-            <Pagination
-                amountItems={amountOfUser}
-                pageSize={pageSize}
-                onPageChange={pageChangeHandler}
-                currentPage={currentPage}
+    <>
+      <NavBar msg={letter(amountOfUser)} amountUsers={amountOfUser} />
+      <table className="table">
+        <TableHeader columns={columns} onSort={handleSort}/>
+        <tbody>
+          {usersCrop.map((user) => (
+            <User
+              onDelete={onDelete}
+              onFavorite={onFavorite}
+              key={user._id}
+              user={user}
             />
-        </>
+          ))}
+        </tbody>
+      </table>
+      <Pagination
+        amountItems={amountOfUser}
+        pageSize={pageSize}
+        onPageChange={pageChangeHandler}
+        currentPage={currentPage}
+      />
+    </>
   )
 }
 

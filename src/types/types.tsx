@@ -18,3 +18,8 @@ export interface IUserItem {
     rate: number
     favorite?: boolean
 }
+
+export interface IColumn{
+    iter?: string
+    title: string
+}
