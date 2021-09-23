@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FC } from 'react'
-import User from './User'
-
+// import User from './User'
+import TableBody from './TableBody'
 import NavBar from './NavBar'
 
 import Pagination from './Pagination'
@@ -9,6 +9,7 @@ import PaginationList from '../utils/paginationList'
 
 import _ from 'lodash'
 import TableHeader from './TableHeader'
+import Bookmark from './Bookmark'
 
 export interface TableProps {
     users: IUserItem[]
@@ -19,7 +20,7 @@ export interface TableProps {
 
 const Table: FC<TableProps> = ({ users, onDelete, onFavorite, selectedProf }) => {
   const [currentPage, setCurrentPage] = useState<number>(1)
-  const [sortBy, setSortBy] = useState<{iter:string, order:boolean|'asc'|'desc'}>({ iter: 'name', order: 'asc' })
+  const [sortBy, setSortBy] = useState<{path:string, order:boolean|'asc'|'desc'}>({ path: 'name', order: 'asc' })
 
   useEffect(() => setCurrentPage(1), [selectedProf])
 
@@ -27,36 +28,37 @@ const Table: FC<TableProps> = ({ users, onDelete, onFavorite, selectedProf }) =>
 
   const filtredUsers: IUserItem[] = selectedProf ? users.filter((user:IUserItem) => user.profession._id === selectedProf._id) : users
   const amountOfUser: number = filtredUsers.length
-  const sortedUser: IUserItem[] = _.orderBy(filtredUsers, [sortBy.iter], [sortBy.order])
+  const sortedUser: IUserItem[] = _.orderBy(filtredUsers, [sortBy.path], [sortBy.order])
   const usersCrop: IUserItem[] = PaginationList(sortedUser, currentPage, pageSize)
 
   const columns: {[key: string]: IColumn} = {
     name: {
-      iter: 'name',
+      path: 'name',
       title: 'Имя'
     },
     qualities: {
-      // iter: '',
+      path: '',
       title: 'Качества'
     },
     profession: {
-      iter: 'profession.name',
+      path: 'profession.name',
       title: 'Профессия'
     },
     completedMeetings: {
-      iter: 'completedMeetings',
+      path: 'completedMeetings',
       title: 'Встретился Раз'
     },
     rate: {
-      iter: 'rate',
+      path: 'rate',
       title: 'Оценка'
     },
     bookmark: {
-      iter: 'bookmark',
-      title: 'Избранное'
+      path: 'bookmark',
+      title: 'Избранное',
+      component: (user:IUserItem) => (<Bookmark onFavorite={onFavorite} user={user}/>)
     },
     delete: {
-      // iter: '',
+      path: '',
       title: 'Удалить'
     }
   }
@@ -78,10 +80,10 @@ const Table: FC<TableProps> = ({ users, onDelete, onFavorite, selectedProf }) =>
 
   const handleSort = (param?:string):void => {
     if (!param) return
-    if (sortBy.iter === param) {
+    if (sortBy.path === param) {
       setSortBy((prevState) => ({ ...prevState, order: prevState.order === 'asc' ? 'desc' : 'asc' }))
     } else {
-      setSortBy({ iter: param, order: 'asc' })
+      setSortBy({ path: param, order: 'asc' })
     }
   }
 
@@ -90,7 +92,8 @@ const Table: FC<TableProps> = ({ users, onDelete, onFavorite, selectedProf }) =>
       <NavBar msg={letter(amountOfUser)} amountUsers={amountOfUser} />
       <table className="table">
         <TableHeader columns={columns} onSort={handleSort}/>
-        <tbody>
+        <TableBody columns={columns} data={usersCrop}/>
+        {/* <tbody>
           {usersCrop.map((user) => (
             <User
               onDelete={onDelete}
@@ -99,7 +102,7 @@ const Table: FC<TableProps> = ({ users, onDelete, onFavorite, selectedProf }) =>
               user={user}
             />
           ))}
-        </tbody>
+        </tbody> */}
       </table>
       <Pagination
         amountItems={amountOfUser}

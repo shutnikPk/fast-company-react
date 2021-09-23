@@ -11,7 +11,7 @@ const TableHeader: FC<TableHeaderProps> = ({ onSort, columns }) => {
     <thead>
         <tr>
              {Object.keys(columns).map(column => (
-                <th key={column} onClick={() => onSort(columns[column].iter)} scope="col" role={columns[column].iter && 'button'}>{columns[column].title}</th>
+                <th key={column} onClick={() => onSort(columns[column].path)} scope="col" role={columns[column].path && 'button'}>{columns[column].title}</th>
              ))}
         </tr>
     </thead>

@@ -20,6 +20,7 @@ export interface IUserItem {
 }
 
 export interface IColumn{
-    iter?: string
+    path: string
     title: string
+    component?: any
 }
