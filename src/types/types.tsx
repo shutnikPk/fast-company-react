@@ -22,5 +22,5 @@ export interface IUserItem {
 export interface IColumn{
     path: string
     title: string
-    component?: any
+    component?: any// какой тут тип поставить вместо any
 }

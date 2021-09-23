@@ -8,6 +8,7 @@ interface TableBodyProps {
 }
 
 const TableBody: FC<TableBodyProps> = ({ data, columns }) => {
+// какой тут тип поставить вместо any
   const renderContent = (column:string, item:IUserItem) :any => {
     if (columns[column].component) {
       const component = columns[column].component
