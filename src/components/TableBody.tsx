@@ -22,7 +22,7 @@ const TableBody: FC<TableBodyProps> = ({ data, columns }) => {
       <tr key={item._id}>{
         Object.keys(columns).map(column =>
           (
-            <td key={columns[column].path}>
+            <td key={column}>
                 {renderContent(column, item)}
             </td>
           ))}

@@ -11,6 +11,8 @@ import _ from 'lodash'
 import TableHeader from './TableHeader'
 import Bookmark from './Bookmark'
 
+import Qualitys from './Qualityes'
+
 export interface TableProps {
     users: IUserItem[]
     onDelete: (userId: string) => void
@@ -37,8 +39,9 @@ const Table: FC<TableProps> = ({ users, onDelete, onFavorite, selectedProf }) =>
       title: 'Имя'
     },
     qualities: {
-      path: '',
-      title: 'Качества'
+      path: 'qualities',
+      title: 'Качества',
+      component: (user:IUserItem) => (<Qualitys qualityes={user.qualities} />)
     },
     profession: {
       path: 'profession.name',
@@ -55,11 +58,18 @@ const Table: FC<TableProps> = ({ users, onDelete, onFavorite, selectedProf }) =>
     bookmark: {
       path: 'bookmark',
       title: 'Избранное',
-      component: (user:IUserItem) => (<Bookmark onFavorite={onFavorite} user={user}/>)
+      component: (user:IUserItem) => (<Bookmark
+        onFavorite={onFavorite} user={user}/>)
     },
     delete: {
       path: '',
-      title: 'Удалить'
+      title: 'Удалить',
+      component: (user:IUserItem) => (<button
+                    onClick={() => onDelete(user._id)}
+                    className="btn btn-danger btn-sm"
+                >
+                    Delete
+                </button>)
     }
   }
 
