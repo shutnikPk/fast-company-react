@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 export interface IProfession {
     _id: string
     name: string
@@ -22,5 +24,5 @@ export interface IUserItem {
 export interface IColumn{
     path: string
     title: string
-    component?: any// какой тут тип поставить вместо any
+    component?: (user: IUserItem) => React.ReactNode
 }

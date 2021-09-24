@@ -8,11 +8,10 @@ interface TableBodyProps {
 }
 
 const TableBody: FC<TableBodyProps> = ({ data, columns }) => {
-// какой тут тип поставить вместо any
-  const renderContent = (column:string, item:IUserItem) :any => {
+  const renderContent = (column:string, item:IUserItem) : string|number|React.ReactNode => {
     if (columns[column].component) {
       const component = columns[column].component
-      return component(item)
+      return component && component(item)
     }
     return _.get(item, columns[column].path)
   }
