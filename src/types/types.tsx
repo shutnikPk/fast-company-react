@@ -25,5 +25,4 @@ export interface IColumn{
     path: string
     title: string
     component?: (user: IUserItem) => React.ReactNode
-    arrow?:string
 }
