@@ -39,7 +39,7 @@ const Table: FC<TableProps> = ({ users, onDelete, onFavorite, selectedProf }) =>
       title: 'Имя'
     },
     qualities: {
-      path: 'qualities',
+      path: '',
       title: 'Качества',
       component: (user:IUserItem) => (<Qualitys qualityes={user.qualities} />)
     },
@@ -87,8 +87,8 @@ const Table: FC<TableProps> = ({ users, onDelete, onFavorite, selectedProf }) =>
     }
     return ''
   }
-
-  const handleSort = (param?:string):void => {
+  const handleSort = (item:IColumn): void|string => {
+    const param: string|undefined = item.path
     if (!param) return
     if (sortBy.path === param) {
       setSortBy((prevState) => ({ ...prevState, order: prevState.order === 'asc' ? 'desc' : 'asc' }))
@@ -101,18 +101,8 @@ const Table: FC<TableProps> = ({ users, onDelete, onFavorite, selectedProf }) =>
     <>
       <NavBar msg={letter(amountOfUser)} amountUsers={amountOfUser} />
       <table className="table">
-        <TableHeader columns={columns} onSort={handleSort}/>
+        <TableHeader columns={columns} onSort={handleSort} arrow={sortBy.order === 'asc' ? 'bi bi-caret-down-fill' : 'bi bi-caret-up-fill'} name={sortBy.path}/>
         <TableBody columns={columns} data={usersCrop}/>
-        {/* <tbody>
-          {usersCrop.map((user) => (
-            <User
-              onDelete={onDelete}
-              onFavorite={onFavorite}
-              key={user._id}
-              user={user}
-            />
-          ))}
-        </tbody> */}
       </table>
       <Pagination
         amountItems={amountOfUser}

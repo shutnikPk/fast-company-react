@@ -20,9 +20,9 @@ const User: FC<UserProps> = ({ user, onDelete, onFavorite }) => {
             <td>{user.rate}</td>
             <td>
                 <i
-                    onClick={() => onFavorite(user._id, user.favorite)}
+                    onClick={() => onFavorite(user._id, user.bookmark)}
                     className={
-                        user.favorite ? 'bi bi-bookmark-fill' : 'bi bi-bookmark'
+                        user.bookmark ? 'bi bi-bookmark-fill' : 'bi bi-bookmark'
                     }
                 />
             </td>

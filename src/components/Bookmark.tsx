@@ -9,9 +9,9 @@ export interface BookmarkProps {
 const Bookmark: FC<BookmarkProps> = ({ user, onFavorite }) => {
   return (<i
         key={user._id}
-        onClick={() => onFavorite(user._id, user.favorite)}
+        onClick={() => onFavorite(user._id, user.bookmark)}
         className={
-            user.favorite ? 'bi bi-bookmark-fill' : 'bi bi-bookmark'
+            user.bookmark ? 'bi bi-bookmark-fill' : 'bi bi-bookmark'
         }
     />)
 }

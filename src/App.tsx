@@ -37,7 +37,7 @@ function App () {
     if (!users) return
     const newState = users.map((e) => {
       if (e._id === userId) {
-        e.favorite = !e.favorite
+        e.bookmark = !e.bookmark
       }
       return e
     })

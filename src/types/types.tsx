@@ -18,11 +18,12 @@ export interface IUserItem {
     qualities: IQuality[]
     completedMeetings: number
     rate: number
-    favorite?: boolean
+    bookmark: boolean
 }
 
 export interface IColumn{
     path: string
     title: string
     component?: (user: IUserItem) => React.ReactNode
+    arrow?:string
 }
